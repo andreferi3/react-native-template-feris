@@ -1,8 +1,26 @@
 {
-    "name": "react-native-template-feris",
-    "version": "0.0.5",
-    "description": "React Native Feris Template",
-    "repository": "git@github.com:andreferi3/react-native-template-feris.git",
-    "author": "Andre Feri Saputra <andreferi135@gmail.com>",
-    "license": "MIT"
-  }
+  "name": "react-native-template-feris",
+  "version": "0.0.1",
+  "description": "Clean and minimalist React Native template for a quick start with TypeScript with some cool configuration.",
+  "files": [
+    "ferisTemplate",
+    "template.config.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreferi3/react-native-template-feris.git"
+  },
+  "keywords": [
+    "react-native",
+    "typescript",
+    "jest",
+    "template",
+    "boilerplate"
+  ],
+  "author": "Andre Feri Saputra <andreferi135@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "hhttps://github.com/andreferi3/react-native-template-feris"
+  },
+  "homepage": "https://github.com/andreferi3/react-native-template-feris#readme"
+}
