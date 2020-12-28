@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: Verifying fastlane version" time="0.000474">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: ensure_git_branch" time="0.02464">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: git_pull" time="7.802636">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: increment_version_name" time="0.009462">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: increment_version_code" time="0.005918">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: Switch to android show_all_version lane" time="0.000381">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: get_version_name" time="0.001667">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="7: get_version_code" time="0.001042">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

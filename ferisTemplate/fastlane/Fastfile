@@ -1,0 +1,118 @@
+fastlane_version "2.165.0"
+
+before_all do |lane, options|
+    ensure_git_branch
+    # ensure_git_status_clean
+    git_pull
+end
+
+platform :android do
+    desc "Get list of version on build gradle"
+    lane :show_all_version do
+        version = get_version_name
+        UI.message("Version Name : " + version)
+        version_code = get_version_code
+        UI.message("Version Code : " + version_code)
+    end
+
+    desc "Bump up version for production based on semver rules"
+    lane :bumpup_version do |options|
+        type_bump = UI.select("Select version change: ", ["major", "minor", "patch"])
+        increment_version_name(bump_type: type_bump)
+        increment_version_code
+        show_all_version
+    end
+
+    desc "Code Push Release Production"
+    lane :codepush_prod do |options|
+        current_version = get_version_name(
+            app_project_dir: '**/app'
+        )
+        Dir.chdir('..') do
+            sh "appcenter codepush release-react -a CompanyName/AppName -d Production -t '#{current_version}'" do |status, result, command|
+                unless status.success?
+                    UI.error "Command #{command} failed with status #{status.exitstatus}"
+                end
+    
+                UI.success "🚀 All done! Check out the rollout & install stats in the Codepush section of the dashboard on App Center."
+            end
+        end
+    end
+
+    desc "Code Push Release Staging"
+    lane :codepush_staging do |options|
+        current_version = get_version_name(
+            app_project_dir: '**/app'
+        )
+        Dir.chdir('..') do
+            sh "appcenter codepush release-react -a CompanyName/AppName -d Staging -t '#{current_version}'" do |status, result, command|
+                unless status.success?
+                    UI.error "Command #{command} failed with status #{status.exitstatus}"
+                end
+    
+                UI.success "🚀 All done! Check out the rollout & install stats in the Codepush section of the dashboard on App Center."
+            end
+        end
+    end
+
+    desc "Distribute to firebase app distribution"
+    lane :firebase_beta do |options|
+        select_group = UI.select("Select group you want to distribute : ", ["Group1", "Group2"])
+        firebase_app_distribution(
+            app: 'YourAppId',
+            groups: select_group,
+            release_notes: 'Lots of new features to test out!',
+            apk_path: './android/app/build/outputs/apk/release/YourAppName.apk'
+        )
+    end
+
+    desc "Upload to internal test google play"
+    lane :gplay do |options|
+        track = UI.select("Select track to release the app : ", ["production", "beta", "alpha", "internal"])
+        package_name = "packageName"
+        path = UI.select("Select Path : ", ["productionRelease", "betaRelease"])
+        if UI.confirm("Do u want to edit changelog. Proceed?")
+            changelog = prompt(text: "Changelog :")
+            Dir.chdir("..") do
+                sh "echo #{changelog} > fastlane/metadata/android/en-US/changelogs/9.txt" do |status, result, command|
+                    unless status.success?
+                        UI.error "Command #{command} failed with status #{status.exitstatus}"
+                    end
+
+                    UI.success "🚀 Success edit changelog"
+                end
+            end
+        end
+        supply(
+            aab: "./android/app/build/outputs/bundle/#{path}/app.aab",
+            package_name: package_name,
+            track: track,
+            skip_upload_apk: true,
+            skip_upload_metadata: true,
+            skip_upload_images: true,
+            skip_upload_screenshots: true,
+            skip_upload_changelogs: true,
+        )
+    end
+
+    desc "Build Bundle Android App"
+    lane :build do |options|
+        bumpup_version
+        build_task = UI.select("Select task you want to build apk : ", ["bundle", "assemble"])
+        gradle(task: 'clean', project_dir: './android')
+        gradle(task: build_task, build_type: 'Release', project_dir: './android')
+        if UI.confirm("About to distirubte your app to share with our tester, do you want to distribute app to playstore or firebase. Proceed?")
+            selection = UI.select("Select ur distribution provider u want to use :", [
+                "Firebase",
+                "Playstore Internal Test"
+            ])
+            if selection == "Firebase"
+                firebase_beta
+            else
+                gplay
+            end
+          else
+            UI.success "🚀 All done! Your apps was builded perfectly"
+        end
+    end
+end

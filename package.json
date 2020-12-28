@@ -1,0 +1,8 @@
+{
+    "name": "react-native-template-feris",
+    "version": "0.0.5",
+    "description": "React Native Feris Template",
+    "repository": "git@github.com:andreferi3/react-native-template-feris.git",
+    "author": "Andre Feri Saputra <andreferi135@gmail.com>",
+    "license": "MIT"
+  }

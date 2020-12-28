@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "35404694877",
+    "project_id": "feris-template",
+    "storage_bucket": "feris-template.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35404694877:android:d7bc173a6c1905237bd4b4",
+        "android_client_info": {
+          "package_name": "com.feristemplate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "35404694877-rm53n8n96t7mefl40k6oro0ksd23ba7m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.feristemplate",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "35404694877-q26ik048a4qu1mbbrm3ch0hed4nppl2u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbnwYxdZ-T9mNyZ6COFuTk75Bw5XrmAkw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "35404694877-q26ik048a4qu1mbbrm3ch0hed4nppl2u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
