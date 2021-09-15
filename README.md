@@ -47,6 +47,33 @@ See the below table to find out which version of the template to use.
 | ------------ | -------- |
 | 0.63         | 1.0.\*   |
 
+## ⚠️ For Macbook with Apple Processor (must read this)
+
+For Macbook with Apple Processor there's should replace the below code in `Podfile`
+
+```
+use_flipper!
+post_install do |installer|
+  flipper_post_install(installer)
+end
+```
+
+with this
+
+```
+use_flipper!({ 'Flipper' => '0.108.0' })
+post_install do |installer|
+  flipper_post_install(installer)
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings["ONLY_ACTIVE_ARCH"] = "NO"
+    end
+  end
+end
+```
+
+> Note: if flipper with version 0.108.0 is still occured error. please try the latest version of flipper, check this : [Flipper](https://github.com/facebook/flipper)
+
 ## :warning: React Native CLI
 
 This template only works with the new CLI. Make sure you have uninstalled the legacy `react-native-cli` first (`npm uninstall -g react-native-cli`) for the below command to work. If you wish to not use `npx`, you can also install the new CLI globally (`npm i -g @react-native-community/cli` or `yarn global add @react-native-community/cli`).
